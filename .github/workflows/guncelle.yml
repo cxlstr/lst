@@ -11,23 +11,27 @@ jobs:
       - name: Depoyu Kopyala
         uses: actions/checkout@v4
 
-      - name: Kanalları Tek Dosyada Kusursuz Birlestir
+      - name: Depodaki Dosyaları Sırayla Kusursuz Birlestir
         run: |
           echo "#EXTM3U" > hepsi.m3u
-          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
-          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
-          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
-          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
-          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           
-          # İşte senin dediğin isvicre.m3u dosyasının içindeki adresi robota okuttuğumuz o gerçek satır:
-          ISVICRE_ADRESI=$(cat isvicre.m3u)
-          curl -s "$ISVICRE_ADRESI" | sed '1d' >> hepsi.m3u
+          # 1. Adım: Senin p.m3u dosyanın içindeki 5 tane linki sırayla okuyup hepsi.m3u'ya atıyoruz
+          while IFS= read -r link || [ -n "$link" ]; do
+            if [ ! -z "$link" ]; then
+              curl -s "$link" | sed '1d' >> hepsi.m3u
+            fi
+          done < p.m3u
+          
+          # 2. Adım: Senin isvicre.m3u dosyanın içindeki İsviçre linkini okuyup en alta ekliyoruz
+          ISVICRE_LINK=$(cat isvicre.m3u)
+          if [ ! -z "$ISVICRE_LINK" ]; then
+            curl -s "$ISVICRE_LINK" | sed '1d' >> hepsi.m3u
+          fi
 
       - name: Degisiklikleri Kaydet
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add hepsi.m3u
-          git diff-index --quiet HEAD || git commit -m "Isvicre m3u Dosyasındaki Adres Okundu"
+          git diff-index --quiet HEAD || git commit -m "Tum listeler deponun duzenine gore birlestirildi"
           git push
