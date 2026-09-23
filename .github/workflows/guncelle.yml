@@ -11,7 +11,7 @@ jobs:
       - name: Depoyu Kopyala
         uses: actions/checkout@v4
 
-      - name: Kanalları ve Calısan İsvicre Listesini Birlestir
+      - name: Kanalları Tek Dosyada Kusursuz Birlestir
         run: |
           echo "#EXTM3U" > hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
@@ -19,12 +19,15 @@ jobs:
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
-          curl -s "https://github.io" | sed '1d' >> hepsi.m3u
+          
+          # İşte senin dediğin isvicre.m3u dosyasının içindeki adresi robota okuttuğumuz o gerçek satır:
+          ISVICRE_ADRESI=$(cat isvicre.m3u)
+          curl -s "$ISVICRE_ADRESI" | sed '1d' >> hepsi.m3u
 
       - name: Degisiklikleri Kaydet
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add hepsi.m3u
-          git diff-index --quiet HEAD || git commit -m "Tum Kanallar Tamamen Calısır Durumda"
+          git diff-index --quiet HEAD || git commit -m "Isvicre m3u Dosyasındaki Adres Okundu"
           git push
