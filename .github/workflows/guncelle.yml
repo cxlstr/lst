@@ -19,7 +19,7 @@ jobs:
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
-          curl -s "https://iptv-org.github.io/iptv/countries/ch.m3u" | sed '1d' >> hepsi.m3u
+        
 
       - name: Degisiklikleri Kaydet
         run: |
