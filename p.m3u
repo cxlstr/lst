@@ -1,16 +1,17 @@
 #EXTM3U
 
-#EXTINF:-1 tvg-name="Plex TV" group-title="Plex TV",Plex TV Giriş
+#EXTINF:-1 uri="https://githubusercontent.com",Plex TV
 https://githubusercontent.com
 
-#EXTINF:-1 tvg-name="Pluto TV" group-title="Pluto TV",Pluto TV Giriş
+#EXTINF:-1 uri="https://githubusercontent.com",Pluto TV
 https://githubusercontent.com
 
-#EXTINF:-1 tvg-name="Roku TV" group-title="Roku TV",Roku TV Giriş
+#EXTINF:-1 uri="https://githubusercontent.com",Roku TV
 https://githubusercontent.com
 
-#EXTINF:-1 tvg-name="Samsung TV" group-title="Samsung TV",Samsung TV Giriş
+#EXTINF:-1 uri="https://githubusercontent.com",Samsung TV
 https://githubusercontent.com
 
-#EXTINF:-1 tvg-name="Tubi TV" group-title="Tubi TV",Tubi TV Giriş
+#EXTINF:-1 uri="https://githubusercontent.com",Tubi TV
 https://githubusercontent.com
+
