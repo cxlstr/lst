@@ -1,17 +1,2 @@
-#EXTM3U
-
-#EXTINF:-1 uri="https://githubusercontent.com",Plex TV
-https://githubusercontent.com
-
-#EXTINF:-1 uri="https://githubusercontent.com",Pluto TV
-https://githubusercontent.com
-
-#EXTINF:-1 uri="https://githubusercontent.com",Roku TV
-https://githubusercontent.com
-
-#EXTINF:-1 uri="https://githubusercontent.com",Samsung TV
-https://githubusercontent.com
-
-#EXTINF:-1 uri="https://githubusercontent.com",Tubi TV
-https://githubusercontent.com
+https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/plex_all.m3u
 
