@@ -14,19 +14,24 @@ jobs:
       - name: Kanalları Tek Dosyada Kusursuz Birlestir
         run: |
           echo "#EXTM3U" > hepsi.m3u
-          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/plex_all.m3u" | sed '1d' >> hepsi.m3u
-          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/plutotv_all.m3u" | sed '1d' >> hepsi.m3u
-          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/roku_all.m3u" | sed '1d' >> hepsi.m3u
-          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/samsungtvplus_all.m3u" | sed '1d' >> hepsi.m3u
-          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/tubi_all.m3u" | sed '1d' >> hepsi.m3u
           
-          # İşte senin dediğin, refs/heads/main olarak düzelttiğimiz o doğru İsviçre satırı:
-          curl -s "https://raw.githubusercontent.com/iptv-ch/iptv-ch.github.io/refs/heads/main/swisscom-hd.m3u" | sed '1d' >> hepsi.m3u
+          # 1. Adım: p.m3u dosyanın içindeki o çalışan 5 linki sırayla okuyup içeriği çekiyoruz
+          while IFS= read -r link || [ -n "$link" ]; do
+            if [ ! -z "$link" ]; then
+              curl -s "$link" | sed '1d' >> hepsi.m3u
+            fi
+          done < p.m3u
+          
+          # 2. Adım: isvicre.m3u dosyanın içindeki o senin çalışan İsviçre adresini okuyup içeriği çekiyoruz
+          ISVICRE_LINK=$(cat isvicre.m3u)
+          if [ ! -z "$ISVICRE_LINK" ]; then
+            curl -s "$ISVICRE_LINK" | sed '1d' >> hepsi.m3u
+          fi
 
       - name: Degisiklikleri Kaydet
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add hepsi.m3u
-          git diff-index --quiet HEAD || git commit -m "Son link refs heads main olarak duzeltildi"
+          git diff-index --quiet HEAD || git commit -m "Tum kanallar deponun duzenine gore birlestirildi"
           git push
