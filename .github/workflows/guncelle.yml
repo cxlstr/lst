@@ -11,27 +11,20 @@ jobs:
       - name: Depoyu Kopyala
         uses: actions/checkout@v4
 
-      - name: Kanalları Tek Dosyada Kusursuz Birlestir
+      - name: Kanalları ve Calısan İsvicre Listesini Birlestir
         run: |
           echo "#EXTM3U" > hepsi.m3u
-          
-          # 1. Adım: p.m3u dosyanın içindeki o çalışan 5 linki sırayla okuyup içeriği çekiyoruz
-          while IFS= read -r link || [ -n "$link" ]; do
-            if [ ! -z "$link" ]; then
-              curl -s "$link" | sed '1d' >> hepsi.m3u
-            fi
-          done < p.m3u
-          
-          # 2. Adım: isvicre.m3u dosyanın içindeki o senin çalışan İsviçre adresini okuyup içeriği çekiyoruz
-          ISVICRE_LINK=$(cat isvicre.m3u)
-          if [ ! -z "$ISVICRE_LINK" ]; then
-            curl -s "$ISVICRE_LINK" | sed '1d' >> hepsi.m3u
-          fi
+          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
+          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
+          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
+          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
+          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
+        
 
       - name: Degisiklikleri Kaydet
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add hepsi.m3u
-          git diff-index --quiet HEAD || git commit -m "Tum kanallar deponun duzenine gore birlestirildi"
+          git diff-index --quiet HEAD || git commit -m "Tum Kanallar Tamamen Calısır Durumda"
           git push
