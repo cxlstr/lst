@@ -19,8 +19,6 @@ jobs:
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
-          
-          # İşte senin o gösterdiğin adresteki gerçek kanal verilerini hatasız çeken doğru kod satırı:
           curl -s "https://raw.githubusercontent.com/iptv-ch/iptv-ch.github.io/refs/heads/master/swisscom-hd.m3u" | sed '1d' >> hepsi.m3u
 
       - name: Degisiklikleri Kaydet
