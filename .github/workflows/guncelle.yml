@@ -11,7 +11,7 @@ jobs:
       - name: Depoyu Kopyala
         uses: actions/checkout@v4
 
-      - name: Kanalları ve Calısan İsvicre Listesini Birlestir
+            - name: Kanalları Tek Dosyada Kusursuz Birlestir
         run: |
           echo "#EXTM3U" > hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
@@ -19,6 +19,8 @@ jobs:
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
+          curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
+
         
 
       - name: Degisiklikleri Kaydet
