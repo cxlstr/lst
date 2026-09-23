@@ -11,27 +11,22 @@ jobs:
       - name: Depoyu Kopyala
         uses: actions/checkout@v4
 
-      - name: Depodaki Dosyaları Sırayla Kusursuz Birlestir
+      - name: Kanalları Tek Dosyada Kusursuz Birlestir
         run: |
           echo "#EXTM3U" > hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/plex_all.m3u" | sed '1d' >> hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/plutotv_all.m3u" | sed '1d' >> hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/roku_all.m3u" | sed '1d' >> hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/samsungtvplus_all.m3u" | sed '1d' >> hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/tubi_all.m3u" | sed '1d' >> hepsi.m3u
           
-          # 1. Adım: Senin p.m3u dosyanın içindeki 5 tane linki sırayla okuyup hepsi.m3u'ya atıyoruz
-          while IFS= read -r link || [ -n "$link" ]; do
-            if [ ! -z "$link" ]; then
-              curl -s "$link" | sed '1d' >> hepsi.m3u
-            fi
-          done < p.m3u
-          
-          # 2. Adım: Senin isvicre.m3u dosyanın içindeki İsviçre linkini okuyup en alta ekliyoruz
-          ISVICRE_LINK=$(cat isvicre.m3u)
-          if [ ! -z "$ISVICRE_LINK" ]; then
-            curl -s "$ISVICRE_LINK" | sed '1d' >> hepsi.m3u
-          fi
+          # İşte senin dediğin, refs/heads/main olarak düzelttiğimiz o doğru İsviçre satırı:
+          curl -s "https://raw.githubusercontent.com/iptv-ch/iptv-ch.github.io/refs/heads/main/swisscom-hd.m3u" | sed '1d' >> hepsi.m3u
 
       - name: Degisiklikleri Kaydet
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add hepsi.m3u
-          git diff-index --quiet HEAD || git commit -m "Tum listeler deponun duzenine gore birlestirildi"
+          git diff-index --quiet HEAD || git commit -m "Son link refs heads main olarak duzeltildi"
           git push
