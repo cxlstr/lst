@@ -11,7 +11,7 @@ jobs:
       - name: Depoyu Kopyala
         uses: actions/checkout@v4
 
-      - name: Kanalları Tek Dosyada Kusursuz Birlestir
+      - name: Kanalları ve Calısan İsvicre Listesini Birlestir
         run: |
           echo "#EXTM3U" > hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
@@ -19,12 +19,12 @@ jobs:
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
           curl -s "https://githubusercontent.com" | sed '1d' >> hepsi.m3u
-          curl -s "https://raw.githubusercontent.com/iptv-ch/iptv-ch.github.io/refs/heads/master/swisscom-hd.m3u" | sed '1d' >> hepsi.m3u
+          curl -s "https://github.io" | sed '1d' >> hepsi.m3u
 
       - name: Degisiklikleri Kaydet
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add hepsi.m3u
-          git diff-index --quiet HEAD || git commit -m "Isvicre Kanal Adresleri Tamamen Duzeltildi"
+          git diff-index --quiet HEAD || git commit -m "Tum Kanallar Tamamen Calısır Durumda"
           git push
