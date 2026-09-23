@@ -1,0 +1,29 @@
+name: M3U Otomatik Birlestirici
+on:
+  schedule:
+    - cron: '0 0 * * *' # Her gece 00:00'da çalışır
+  workflow_dispatch: # Elle çalıştırma butonu açar
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu Kopyala
+        uses: actions/checkout@v4
+
+      - name: Kanalları Tek Dosyada Birlestir
+        run: |
+          echo "#EXTM3U" > hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/plex_all.m3u" | grep -v "#EXTM3U" >> hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/plutotv_all.m3u" | grep -v "#EXTM3U" >> hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/roku_all.m3u" | grep -v "#EXTM3U" >> hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/samsungtvplus_all.m3u" | grep -v "#EXTM3U" >> hepsi.m3u
+          curl -s "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/refs/heads/main/playlists/tubi_all.m3u" | grep -v "#EXTM3U" >> hepsi.m3u
+
+      - name: Degisiklikleri Kaydet
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add hepsi.m3u
+          git diff-index --quiet HEAD || git commit -m "Kanallar Otomatik Güncellendi"
+          git push
