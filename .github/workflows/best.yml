@@ -1,0 +1,24 @@
+name: Best M3U Otomatik Guncelleme
+on:
+  schedule:
+    - cron: '0 1 * * *' # Her gece 01:00'da çalışır (Diğeriyle çakışmasın diye)
+  workflow_dispatch: # Elle çalıştırma butonu
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu Kopyala
+        uses: actions/checkout@v4
+
+      - name: Best Listesini Cek ve Kaydet
+        run: |
+          curl -s "https://github.io" > best.m3u
+
+      - name: Degisiklikleri Kaydet
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add best.m3u
+          git diff-index --quiet HEAD || git commit -m "Best Listesi Otomatik Güncellendi"
+          git push
